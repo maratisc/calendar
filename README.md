@@ -13,7 +13,7 @@ Optionally, vacation and holiday dates can be provided to exclude counting meeti
 JDK 8 or higher is required. The project can be set up as a Java project in Eclise IDE.
 
 ## Future Enhancements
-Besides basic security, user set up, authentication, authorization, the application should be available online, accessible from mobile devices and have the features below. User feedback should be sought for any modifications to these or new additions.
+User set up, authentication, authorization, online availability, accessibility from mobile devices and the features below:
 ```
 Enter parameters in a form
 Select dates from a UI calendar widget
