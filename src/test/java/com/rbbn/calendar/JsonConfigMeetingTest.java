@@ -17,6 +17,15 @@ class JsonConfigMeetingTest {
 															"{\"startDate\": \"2021-01-01\"," + 
 															"\"endDate\": \"2021-12-31\"," + 
 															"\"meetingDays\": [\"Thursday\"]}]";
+	
+	// meeting two days a week some weeks
+	private static final String JSON_MEETING_DATES_2 = "[{\"startDate\": \"2020-05-04\"," + 
+			"\"endDate\": \"2020-12-31\"," + 
+				"\"meetingDays\": [\"Wednesday\"]}," + 
+				"{\"startDate\": \"2021-01-01\"," + 
+				"\"endDate\": \"2021-12-31\"," + 
+				"\"meetingDays\": [\"Wednesday\",\"Thursday\"]}]";
+
 	private static final String JSON_VACATION_HOLIDAY_DATES = "[\"2020-05-20\",\"2020-05-21\",\"2020-05-22\",\"2020-05-25\",\"2020-09-07\",\"2020-11-26\",\"2020-11-27\",\"2020-12-25\",\"2021-01-18\",\"2021-05-31\",\"2021-09-06\",\"2021-11-25\",\"2021-11-26\",\"2021-12-25\"]";
 
 	private JsonConfigMeeting meeting;
@@ -125,4 +134,23 @@ class JsonConfigMeetingTest {
 		}
 	}
 
+	@Test
+	void getMeetingParametersList_2() throws Exception {
+		JsonConfigMeeting mtng = new JsonConfigMeeting();
+		// meeting two days a week some weeks
+		mtng.setupMeetingParametersList(JSON_MEETING_DATES_2);
+		int count = mtng.getMeetingOccurrences().getMeetingParametersList().size();
+		assertEquals(3, count);
+	}
+	
+	@Test
+	void getOccurrencesCount_2() throws Exception {
+		JsonConfigMeeting mtng = new JsonConfigMeeting();
+		// meeting two days a week some weeks
+		mtng.setupMeetingParametersList(JSON_MEETING_DATES_2);
+		mtng.setupVacationAndHolidays(JSON_VACATION_HOLIDAY_DATES);
+		int count = mtng.getOccurrencesCount(LocalDate.parse("2021-01-07"));
+		assertEquals(36, count);
+	}
+	
 }

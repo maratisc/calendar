@@ -10,12 +10,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * 
- * Accepts JSON input specifying meeting parameters. Use in situations where a meeting information is entered
- * in a form/page and it can be captured as JSON. See {@link #setupMeetingParametersList(String)} and
- * {@link #setupVacationAndHolidays(String)} for the required JSON format details.
+ * Accepts JSON input specifying meeting parameters. Use in situations where a
+ * meeting information is entered in a form/page and it can be captured as JSON.
+ * See {@link #setupMeetingParametersList(String)} and
+ * {@link #setupVacationAndHolidays(String)} for the required JSON format
+ * details.
  * 
- * TODO: Allow entering multiple meeting days a week
- * TODO: Allow specifying number of meetings required in lieu of the end date
+ * TODO: Allow specifying number of meetings required in lieu of the end date?
  *
  */
 public class JsonConfigMeeting implements IMeetingOccurrences {
@@ -38,10 +39,14 @@ public class JsonConfigMeeting implements IMeetingOccurrences {
 		ObjectMapper mapper = new ObjectMapper();
 		List<Map<String, Object>> jsonList = mapper.readValue(json, List.class);
 		List<MeetingParameters> meetingParametersList = new ArrayList<>();
-		jsonList.forEach(inputLine -> meetingParametersList
-				.add(new MeetingParameters(LocalDate.parse((CharSequence) inputLine.get("startDate")),
-						LocalDate.parse((CharSequence) inputLine.get("endDate")),
-						DayOfWeek.valueOf(((String) ((List) inputLine.get("meetingDays")).get(0)).toUpperCase()))));
+		jsonList.forEach(inputLine -> {
+			List<String> meetingDaysList = (List<String>) inputLine.get("meetingDays");
+			// create an instance of MeetingParameters for each meetingDay in the meetingDays list
+			meetingDaysList.forEach(meetingDay -> meetingParametersList
+					.add(new MeetingParameters(LocalDate.parse((CharSequence) inputLine.get("startDate")),
+							LocalDate.parse((CharSequence) inputLine.get("endDate")),
+							DayOfWeek.valueOf(meetingDay.toUpperCase()))));
+		});
 		meetingOccurrences.setMeetingParametersList(meetingParametersList);
 	}
 
