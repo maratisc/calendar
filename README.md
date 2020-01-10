@@ -1,6 +1,6 @@
 # Calendar
 
-A calendar and scheduling application in Java. Presently only a portion of the requirements are addressed, i.e., given the meeting parameters provide the number of days the meeting occurs. Meeting parameters can be provided in a CSV file as in 
+A calendar and scheduling application in Java. Presently only a portion of the requirements is addressed, i.e., given the meeting parameters, provide the number of days the meeting occurs. Meeting parameters can be provided in a CSV file as in 
 ```
    # input.csv
    # start, end, day of week
